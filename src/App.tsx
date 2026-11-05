@@ -48,7 +48,7 @@ export const App: React.FC = () => {
     <main
       onClick={handleScreenClick}
       onTouchStart={handleTouchStart}
-      className="relative h-[100dvh] min-h-[100dvh] max-h-[100dvh] w-full dreamy-aurora overflow-hidden flex flex-col items-center justify-between px-3 sm:px-4 safe-top safe-bottom antialiased cursor-default select-none"
+      className="relative min-h-[100dvh] w-full dreamy-aurora overflow-x-hidden overflow-y-auto flex flex-col items-center justify-between px-3.5 sm:px-4 py-2 sm:py-3 safe-top safe-bottom antialiased cursor-default select-none"
     >
       {/* Dreamy animated sky elements & background decorations */}
       <BackgroundDecorations />
@@ -69,15 +69,15 @@ export const App: React.FC = () => {
         ))}
       </AnimatePresence>
 
-      {/* Main Single-Screen Content Shell - Mobile Native Frame */}
-      <div className="relative z-10 w-full max-w-[400px] h-full flex flex-col justify-between items-center py-1 sm:py-2 mx-auto">
+      {/* Main Content Shell - Mobile Native Frame */}
+      <div className="relative z-10 w-full max-w-[410px] min-h-full flex flex-col justify-between items-center py-1 sm:py-2 mx-auto space-y-2 sm:space-y-3">
         {/* Top: Opening Note & Warm Greetings */}
         <Header />
 
         {/* Center: Heartfelt Apology Card with Postage Stamp & Secret Promise */}
         <ApologyCard />
 
-        {/* Bottom: Adorable Blinking Teddy Bear & Interactive Hug Button */}
+        {/* Bottom: Adorable Blinking Teddy Bear & Interactive Choice Buttons */}
         <HugInteraction />
 
         {/* Bottommost: Delicate Romantic Footer */}
