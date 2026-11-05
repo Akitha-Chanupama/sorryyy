@@ -6,8 +6,63 @@ export interface ResponsePayload {
   timestamp: string;
 }
 
-// Fallback DOM Form submission via invisible iframe (never blocked by CORS or Safari tracking prevention)
-const submitViaHiddenIframe = (payload: ResponsePayload) => {
+// Generate pre-filled WhatsApp link
+export const getWhatsAppLink = (payload: ResponsePayload): string => {
+  const cleanPhone = CONFIG.phoneNumber.replace(/[^0-9]/g, '');
+  const text = payload.choice === 'forgive'
+    ? 'Hey Akitha! I saw your cute website... I forgive you and I love you 💙 Call me once lectures end!'
+    : 'Hey Akitha, I saw your website... I am still a little angry with you 🥺 Please call me after lectures!';
+  
+  if (cleanPhone) {
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
+  }
+  return `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+};
+
+// Generate pre-filled Mailto link
+export const getMailtoLink = (payload: ResponsePayload): string => {
+  const subject = payload.choice === 'forgive'
+    ? '💙 I forgive you and I love you!'
+    : '🥺 Update: Still a little angry';
+  const body = payload.choice === 'forgive'
+    ? `Hey Akitha,\n\nI saw your little apology website! I forgive you and I love you so much 💙\n\nCall me once lectures are finished! 🥰`
+    : `Hey Akitha,\n\nI saw your website... I am still a little bit angry with you 🥺\n\nMake sure to call me once my lectures end! 💙`;
+
+  return `mailto:${CONFIG.recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+};
+
+export const sendResponseNotification = async (payload: ResponsePayload): Promise<{ success: boolean; message: string }> => {
+  // If Web3Forms Access Key is provided (Recommended for 100% deliverability)
+  if (CONFIG.web3FormsAccessKey && CONFIG.web3FormsAccessKey.trim() !== '') {
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: CONFIG.web3FormsAccessKey.trim(),
+          subject: payload.choice === 'forgive'
+            ? '💙 Good news! She said: I forgive you and I love you!'
+            : '🥺 Update: She said she is still a little angry with you',
+          from_name: 'A Little Reminder 💙',
+          Response: payload.choiceText,
+          Status: payload.choice === 'forgive' ? 'FORGIVEN 💙' : 'STILL ANGRY 🥺',
+          Time: payload.timestamp,
+          Reminder: 'Remember to call her once her lectures are finished!',
+        }),
+      });
+
+      if (res.ok) {
+        return { success: true, message: 'Response delivered to email! 💌' };
+      }
+    } catch (err) {
+      console.error('Web3Forms submission failed:', err);
+    }
+  }
+
+  // Fallback to FormSubmit invisible iframe submission
   try {
     const iframeName = 'formsubmit_hidden_iframe';
     let iframe = document.getElementById(iframeName) as HTMLIFrameElement;
@@ -54,45 +109,8 @@ const submitViaHiddenIframe = (payload: ResponsePayload) => {
       }
     }, 2000);
   } catch (err) {
-    console.error('Iframe submission fallback error:', err);
-  }
-};
-
-export const sendResponseNotification = async (payload: ResponsePayload): Promise<{ success: boolean; message: string }> => {
-  // If recipient email is still placeholder
-  if (!CONFIG.recipientEmail || CONFIG.recipientEmail === 'your-email@example.com') {
-    console.log('[Notification Preview] Her response:', payload);
-    return {
-      success: true,
-      message: 'Preview recorded 💙',
-    };
+    console.error('FormSubmit iframe failed:', err);
   }
 
-  // 1. Fire invisible iframe submission (guaranteed not blocked by CORS)
-  submitViaHiddenIframe(payload);
-
-  // 2. Also attempt direct Fetch with FormData
-  try {
-    const formData = new FormData();
-    formData.append('_subject', payload.choice === 'forgive'
-      ? '💙 Good news! She said: I forgive you and I love you!'
-      : '🥺 Update: She said she is still a little angry with you');
-    formData.append('_template', 'box');
-    formData.append('_captcha', 'false');
-    formData.append('Response', payload.choiceText);
-    formData.append('Status', payload.choice === 'forgive' ? 'FORGIVEN 💙' : 'STILL ANGRY 🥺');
-    formData.append('Time', payload.timestamp);
-    formData.append('Reminder', 'Remember to call her once her lectures are finished!');
-
-    await fetch(`https://formsubmit.co/${encodeURIComponent(CONFIG.recipientEmail.trim())}`, {
-      method: 'POST',
-      mode: 'no-cors', // Avoid CORS preflight network errors
-      body: formData,
-    });
-  } catch (err) {
-    // If fetch failed due to offline/private IP, the iframe method above handles it!
-    console.log('Background fetch completed with iframe fallback');
-  }
-
-  return { success: true, message: 'Response sent with love! 💌' };
+  return { success: true, message: 'Response recorded with love! 💌' };
 };

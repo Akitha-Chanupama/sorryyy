@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { TeddyBear } from './TeddyBear';
 import { Heart, Sparkles, Check, Phone } from 'lucide-react';
-import { sendResponseNotification } from '../services/notificationService';
+import { sendResponseNotification, getWhatsAppLink, getMailtoLink } from '../services/notificationService';
 import { CONFIG } from '../config';
 
 interface BurstHeart {
@@ -72,13 +72,11 @@ export const HugInteraction: React.FC = () => {
 
   // Choice 2: "No, I'm still angry with you 😤"
   const handleAngry = async () => {
-    // Playful gentle hesitation: if she taps once, prompt cute confirmation
     if (angryTapCount === 0) {
       setAngryTapCount(1);
       return;
     }
 
-    // On second tap, confirm and send
     setUserChoice('angry');
     setIsSending(true);
 
@@ -170,7 +168,7 @@ export const HugInteraction: React.FC = () => {
               initial={{ opacity: 0, y: 4, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.92 }}
-              className="px-3 py-0.5 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#2D5A83] text-[12px] sm:text-[13px] font-semibold flex items-center gap-1.5 backdrop-blur-xs"
+              className="px-3.5 py-0.5 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#2D5A83] text-[12px] sm:text-[13px] font-semibold flex items-center gap-1.5 backdrop-blur-xs"
             >
               <Sparkles className="w-3 h-3 text-[#80B9E8] animate-spin" style={{ animationDuration: '6s' }} />
               <span>You made my day! Call me after lectures! 💙</span>
@@ -261,8 +259,43 @@ export const HugInteraction: React.FC = () => {
         </motion.button>
       </div>
 
+      {/* Instant Direct Links once she selects a response */}
+      {userChoice && (
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-center gap-2 mt-2 select-none"
+        >
+          <a
+            href={getWhatsAppLink({
+              choice: userChoice,
+              choiceText: userChoice === 'forgive' ? 'I forgive you and I love you 💙' : "No, I'm still angry with you 😤",
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            })}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#EAF8F0] border border-[#A7E2BE] text-[#1E7E4E] font-semibold text-[11px] shadow-xs active:scale-95 transition-all"
+          >
+            <span>Tell Akitha on WhatsApp</span>
+            <span>💬</span>
+          </a>
+
+          <a
+            href={getMailtoLink({
+              choice: userChoice,
+              choiceText: userChoice === 'forgive' ? 'I forgive you and I love you 💙' : "No, I'm still angry with you 😤",
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            })}
+            className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#EAF2FC] border border-[#B8D8F5] text-[#24527A] font-semibold text-[11px] shadow-xs active:scale-95 transition-all"
+          >
+            <span>Send via Email</span>
+            <span>✉️</span>
+          </a>
+        </motion.div>
+      )}
+
       {/* Hug / Call Action Row beneath response */}
-      <div className="flex items-center justify-center gap-3 mt-1 text-[11px] sm:text-[11.5px]">
+      <div className="flex items-center justify-center gap-3 mt-1.5 text-[11px] sm:text-[11.5px]">
         {/* Tap for a hug option */}
         <button
           type="button"
@@ -286,7 +319,7 @@ export const HugInteraction: React.FC = () => {
         )}
       </div>
 
-      {/* Discreet email delivery status indicator */}
+      {/* Discreet delivery status indicator */}
       {isSending ? (
         <p className="text-[9.5px] text-[#477FAF] mt-0.5 animate-pulse">
           Sending response... ✉️
