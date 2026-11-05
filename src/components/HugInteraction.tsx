@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { TeddyBear } from './TeddyBear';
-import { Heart } from 'lucide-react';
+import { Heart, Sparkles } from 'lucide-react';
 
 interface BurstHeart {
   id: number;
@@ -24,16 +24,16 @@ export const HugInteraction: React.FC = () => {
     setIsHugging(true);
     setHugCount((prev) => prev + 1);
 
-    // Generate burst particles around the teddy bear & button
-    const newHearts: BurstHeart[] = Array.from({ length: 20 }).map((_, i) => {
-      const angle = (i / 20) * 360 + (Math.random() * 20 - 10);
+    // 24 Heart Burst Particles in a 360 degree explosion
+    const newHearts: BurstHeart[] = Array.from({ length: 24 }).map((_, i) => {
+      const angle = (i / 24) * 360 + (Math.random() * 20 - 10);
       const rad = (angle * Math.PI) / 180;
-      const distance = 40 + Math.random() * 70;
+      const distance = 45 + Math.random() * 75;
       return {
         id: Date.now() + i,
         x: Math.cos(rad) * distance,
-        y: Math.sin(rad) * distance - 25, // Upward bias towards teddy & hearts
-        scale: 0.6 + Math.random() * 0.7,
+        y: Math.sin(rad) * distance - 25,
+        scale: 0.6 + Math.random() * 0.75,
         rotation: Math.random() * 60 - 30,
         color: BLUE_SHADES[Math.floor(Math.random() * BLUE_SHADES.length)],
       };
@@ -41,7 +41,6 @@ export const HugInteraction: React.FC = () => {
 
     setBurstHearts(newHearts);
 
-    // Reset bounce trigger after animation cycle
     const timer = setTimeout(() => {
       setIsHugging(false);
     }, 1200);
@@ -51,14 +50,14 @@ export const HugInteraction: React.FC = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-center my-0.5 sm:my-1 w-full select-none">
-      {/* 1. Teddy Bear with Heart Burst Particles & Floating Blue Hearts */}
+      {/* 1. Center Stage: Teddy Bear with Animated Hearts & Tap Reaction */}
       <div className="relative flex items-center justify-center mb-0.5">
         {/* Heart Burst Particles */}
         <AnimatePresence>
           {burstHearts.map((h) => (
             <motion.div
               key={h.id}
-              className="absolute pointer-events-none z-20"
+              className="absolute pointer-events-none z-30"
               initial={{ x: 0, y: 0, scale: 0, opacity: 1, rotate: 0 }}
               animate={{
                 x: h.x,
@@ -68,7 +67,7 @@ export const HugInteraction: React.FC = () => {
                 rotate: h.rotation,
               }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1.15, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             >
               <Heart
                 style={{
@@ -90,7 +89,7 @@ export const HugInteraction: React.FC = () => {
             <motion.div
               className="absolute pointer-events-none text-[#80B9E8] text-xs z-10"
               style={{ top: '8%', left: '8%' }}
-              animate={{ y: [0, -7, 0], opacity: [0.6, 1, 0.6], scale: [0.9, 1.1, 0.9] }}
+              animate={{ y: [0, -8, 0], opacity: [0.6, 1, 0.6], scale: [0.9, 1.15, 0.9] }}
               transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
             >
               💙
@@ -98,7 +97,7 @@ export const HugInteraction: React.FC = () => {
             <motion.div
               className="absolute pointer-events-none text-[#A8D4F7] text-sm z-10"
               style={{ top: '12%', right: '10%' }}
-              animate={{ y: [0, -9, 0], opacity: [0.7, 1, 0.7], scale: [1, 1.15, 1] }}
+              animate={{ y: [0, -10, 0], opacity: [0.7, 1, 0.7], scale: [1, 1.2, 1] }}
               transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
             >
               💙
@@ -122,8 +121,8 @@ export const HugInteraction: React.FC = () => {
           </>
         )}
 
-        {/* Teddy Bear Component */}
-        <TeddyBear isHugging={isHugging} className="cursor-pointer" />
+        {/* Teddy Bear Component (Tappable!) */}
+        <TeddyBear isHugging={isHugging} onBearTap={handleHugClick} />
       </div>
 
       {/* 2. Text message: Prompt or Hug Delivered confirmation */}
@@ -136,8 +135,9 @@ export const HugInteraction: React.FC = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.92 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="px-3 py-0.5 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#35658F] text-[12px] sm:text-[13px] font-semibold flex items-center gap-1.5 backdrop-blur-xs"
+              className="px-3.5 py-0.5 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#35658F] text-[12px] sm:text-[13px] font-semibold flex items-center gap-1.5 backdrop-blur-xs"
             >
+              <Sparkles className="w-3 h-3 text-[#80B9E8] animate-spin" style={{ animationDuration: '6s' }} />
               <span>One big warm hug, just for you!</span>
               <span className="text-sm">💙</span>
             </motion.div>
@@ -150,28 +150,34 @@ export const HugInteraction: React.FC = () => {
               className="text-[12px] sm:text-[13px] text-[#60778C] font-medium font-sans flex items-center gap-1"
             >
               <span>Can I send you a little hug?</span>
+              <span className="text-sm">🥺</span>
             </motion.p>
           )}
         </AnimatePresence>
       </div>
 
-      {/* 3. Tap for a hug Button */}
+      {/* 3. Tap for a hug Button with luxurious pillowy glow & light ray */}
       <motion.button
         type="button"
         onClick={handleHugClick}
-        whileHover={shouldReduceMotion ? {} : { scale: 1.04 }}
+        whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
         whileTap={shouldReduceMotion ? {} : { scale: 0.94 }}
-        className="relative group overflow-hidden px-5 sm:px-6 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#80B9E8] via-[#68A7DC] to-[#5B9FD4] text-white font-semibold text-xs sm:text-[13px] tracking-wide shadow-btn-shadow transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-[#80B9E8] focus:ring-offset-2 flex items-center justify-center gap-1.5"
+        className="relative group overflow-hidden px-6 sm:px-7 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#80B9E8] via-[#68A7DC] to-[#477FAF] text-white font-semibold text-xs sm:text-[13px] tracking-wide shadow-btn-shadow transition-all duration-300 focus:outline-hidden focus:ring-2 focus:ring-[#80B9E8] focus:ring-offset-2 flex items-center justify-center gap-1.5 cursor-pointer"
         aria-label="Send a hug"
       >
-        {/* Subtle button sheen highlight */}
-        <span className="absolute inset-0 w-full h-full bg-gradient-to-t from-transparent via-white/15 to-white/30 pointer-events-none" />
+        {/* Animated Light Ray reflection sweeping across */}
+        <span className="absolute -inset-full w-[250%] h-[250%] bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-light-ray" />
 
         <span className="relative z-10 flex items-center gap-1.5 drop-shadow-xs">
           {hugCount > 0 ? (
             <>
               <span>Hug delivered!</span>
               <span className="text-sm">🫂</span>
+              {hugCount > 1 && (
+                <span className="ml-1 px-1.5 py-0.2 bg-white/25 rounded-full text-[10px] font-bold">
+                  {hugCount}x
+                </span>
+              )}
             </>
           ) : (
             <>
