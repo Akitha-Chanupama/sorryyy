@@ -27,6 +27,8 @@ export const sendResponseNotification = async (payload: ResponsePayload): Promis
         _subject: payload.choice === 'forgive'
           ? '💙 Good news! She said: I forgive you and I love you!'
           : '🥺 Update: She said she is still a little angry with you',
+        _template: 'box',
+        _captcha: 'false',
         Response: payload.choiceText,
         Status: payload.choice === 'forgive' ? 'FORGIVEN 💙' : 'STILL ANGRY 🥺',
         Time: payload.timestamp,
@@ -44,3 +46,4 @@ export const sendResponseNotification = async (payload: ResponsePayload): Promis
     return { success: false, message: 'Network error sending response' };
   }
 };
+
