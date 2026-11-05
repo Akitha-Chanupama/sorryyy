@@ -7,7 +7,7 @@ export const ApologyCard: React.FC = () => {
 
   return (
     <motion.div
-      className="relative w-full max-w-[380px] mx-auto luxury-card-sheen rounded-[24px] sm:rounded-[28px] border border-white/95 p-3 sm:p-3.5 my-auto shadow-soft-blue transition-all shrink-0"
+      className="relative w-full max-w-[385px] mx-auto luxury-card-sheen rounded-[24px] sm:rounded-[28px] border border-white/95 p-3 sm:p-3.5 my-auto shadow-soft-blue transition-all shrink-0"
       initial={{ opacity: 0, y: 14, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
@@ -47,8 +47,8 @@ export const ApologyCard: React.FC = () => {
           <div className="h-[1px] w-14 sm:w-20 bg-gradient-to-l from-transparent via-[#B8D8F5] to-[#B8D8F5]" />
         </div>
 
-        {/* Section 2 */}
-        <div className="space-y-0.5 rounded-xl p-1.5 bg-gradient-to-b from-[#F5FAFF]/80 to-transparent border border-white/70">
+        {/* Section 2 - Irreplaceable & The 1.5 Years Vow */}
+        <div className="space-y-1 rounded-xl p-2 bg-gradient-to-b from-[#F5FAFF] to-transparent border border-white/70">
           <h2 className="text-[15px] sm:text-[16.5px] font-heading font-semibold text-[#2D5A83] tracking-tight flex items-center justify-center gap-1">
             <span>You're irreplaceable.</span>
             <span className="text-sm">💙</span>
@@ -56,6 +56,13 @@ export const ApologyCard: React.FC = () => {
           <p className="text-[12.5px] sm:text-[13.5px] text-[#4E677E] leading-snug font-sans px-1">
             You're not someone I could simply replace. You mean so much to me.
           </p>
+
+          {/* Heartfelt 1.5 Years Message */}
+          <div className="mt-1 pt-1.5 pb-0.5 px-2 rounded-lg bg-gradient-to-r from-[#EBF5FF] via-white to-[#EBF5FF] border border-[#B8D8F5]/60 shadow-xs">
+            <p className="text-[12px] sm:text-[13px] text-[#24527A] font-medium leading-relaxed italic">
+              "I was waiting 1.5 years to make you mine... so do you think I can forget you that easily? I'll do anything in this world to keep you mine forever." 💙
+            </p>
+          </div>
         </div>
 
         {/* Divider 2 with tiny blue heart */}
