@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { TeddyBear } from './TeddyBear';
 import { Heart, Sparkles, Check, Phone } from 'lucide-react';
-import { sendResponseNotification, getWhatsAppLink, getMailtoLink } from '../services/notificationService';
+import { sendResponseNotification } from '../services/notificationService';
 import { CONFIG } from '../config';
 
 interface BurstHeart {
@@ -259,40 +259,7 @@ export const HugInteraction: React.FC = () => {
         </motion.button>
       </div>
 
-      {/* Instant Direct Links once she selects a response */}
-      {userChoice && (
-        <motion.div
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-2 mt-2 select-none"
-        >
-          <a
-            href={getWhatsAppLink({
-              choice: userChoice,
-              choiceText: userChoice === 'forgive' ? 'I forgive you and I love you 💙' : "No, I'm still angry with you 😤",
-              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            })}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#EAF8F0] border border-[#A7E2BE] text-[#1E7E4E] font-semibold text-[11px] shadow-xs active:scale-95 transition-all"
-          >
-            <span>Tell Akitha on WhatsApp</span>
-            <span>💬</span>
-          </a>
 
-          <a
-            href={getMailtoLink({
-              choice: userChoice,
-              choiceText: userChoice === 'forgive' ? 'I forgive you and I love you 💙' : "No, I'm still angry with you 😤",
-              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            })}
-            className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#EAF2FC] border border-[#B8D8F5] text-[#24527A] font-semibold text-[11px] shadow-xs active:scale-95 transition-all"
-          >
-            <span>Send via Email</span>
-            <span>✉️</span>
-          </a>
-        </motion.div>
-      )}
 
       {/* Hug / Call Action Row beneath response */}
       <div className="flex items-center justify-center gap-3 mt-1.5 text-[11px] sm:text-[11.5px]">
