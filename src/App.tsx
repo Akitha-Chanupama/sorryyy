@@ -48,7 +48,7 @@ export const App: React.FC = () => {
     <main
       onClick={handleScreenClick}
       onTouchStart={handleTouchStart}
-      className="relative h-[100dvh] max-h-[100dvh] min-h-[100dvh] w-full dreamy-aurora overflow-hidden flex flex-col items-center justify-between px-3.5 sm:px-4 py-1.5 sm:py-2 safe-top safe-bottom antialiased cursor-default select-none"
+      className="relative min-h-[100dvh] w-full dreamy-aurora overflow-x-hidden flex flex-col items-center justify-between px-3.5 sm:px-4 pt-1.5 pb-2 safe-top safe-bottom antialiased cursor-default select-none"
     >
       {/* Dreamy animated sky elements & background decorations */}
       <BackgroundDecorations />
@@ -69,8 +69,8 @@ export const App: React.FC = () => {
         ))}
       </AnimatePresence>
 
-      {/* Main Content Shell - Strictly Locked to Single Screen */}
-      <div className="relative z-10 w-full max-w-[400px] h-full max-h-full flex flex-col justify-between items-center mx-auto overflow-hidden">
+      {/* Main Content Shell - Natural Flex Column */}
+      <div className="relative z-10 w-full max-w-[400px] flex-1 flex flex-col justify-between items-center mx-auto space-y-2">
         {/* Top: Opening Note & Warm Greetings */}
         <Header />
 
