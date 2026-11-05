@@ -49,7 +49,7 @@ export const HugInteraction: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center justify-center my-0.5 sm:my-1 w-full select-none">
+    <div className="relative flex flex-col items-center justify-center my-auto w-full select-none shrink-0">
       {/* 1. Center Stage: Teddy Bear with Animated Hearts & Tap Reaction */}
       <div className="relative flex items-center justify-center mb-0.5">
         {/* Heart Burst Particles */}
