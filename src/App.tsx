@@ -48,7 +48,7 @@ export const App: React.FC = () => {
     <main
       onClick={handleScreenClick}
       onTouchStart={handleTouchStart}
-      className="relative min-h-[100dvh] w-full dreamy-aurora overflow-x-hidden flex flex-col items-center justify-between px-3.5 sm:px-4 pt-1.5 pb-2 safe-top safe-bottom antialiased cursor-default select-none"
+      className="relative min-h-[100dvh] w-full dreamy-aurora overflow-x-hidden flex flex-col items-center justify-between px-3.5 sm:px-4 pt-3 sm:pt-5 pb-3 safe-top safe-bottom antialiased cursor-default select-none"
     >
       {/* Dreamy animated sky elements & background decorations */}
       <BackgroundDecorations />
@@ -70,8 +70,8 @@ export const App: React.FC = () => {
       </AnimatePresence>
 
       {/* Main Content Shell - Natural Flex Column */}
-      <div className="relative z-10 w-full max-w-[400px] flex-1 flex flex-col justify-between items-center mx-auto space-y-2">
-        {/* Top: Opening Note & Warm Greetings */}
+      <div className="relative z-10 w-full max-w-[400px] flex-1 flex flex-col justify-between items-center mx-auto space-y-2.5 sm:space-y-3.5">
+        {/* Top: Opening Note & Warm Greetings with generous spacing */}
         <Header />
 
         {/* Center: Heartfelt Apology Card with Postage Stamp & Secret Promise */}

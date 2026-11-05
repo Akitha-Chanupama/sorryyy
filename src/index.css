@@ -31,19 +31,19 @@
   }
 }
 
-/* Mobile Safe Areas - tight & natural */
+/* Mobile Safe Areas - generous breathing room at the top */
 .safe-top {
-  padding-top: max(0.5rem, env(safe-area-inset-top, 0.5rem));
+  padding-top: max(1.2rem, env(safe-area-inset-top, 1.2rem));
 }
 
 .safe-bottom {
-  padding-bottom: max(0.6rem, env(safe-area-inset-bottom, 0.6rem));
+  padding-bottom: max(0.8rem, env(safe-area-inset-bottom, 0.8rem));
 }
 
 /* Dreamy Aurora Sky Background */
 .dreamy-aurora {
   background: 
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(184, 216, 245, 0.65) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(184, 216, 245, 0.7) 0%, transparent 60%),
     radial-gradient(circle at 10% 30%, rgba(214, 235, 255, 0.8) 0%, transparent 45%),
     radial-gradient(circle at 90% 40%, rgba(184, 216, 245, 0.7) 0%, transparent 40%),
     radial-gradient(circle at 50% 85%, rgba(214, 235, 255, 0.75) 0%, transparent 55%),
