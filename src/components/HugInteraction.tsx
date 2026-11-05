@@ -162,7 +162,7 @@ export const HugInteraction: React.FC = () => {
       </div>
 
       {/* Dynamic Feedback Message depending on her choice */}
-      <div className="min-h-[28px] flex items-center justify-center my-1 text-center px-2">
+      <div className="min-h-[24px] flex items-center justify-center my-0.5 text-center px-2">
         <AnimatePresence mode="wait">
           {userChoice === 'forgive' ? (
             <motion.div
@@ -170,9 +170,9 @@ export const HugInteraction: React.FC = () => {
               initial={{ opacity: 0, y: 4, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.92 }}
-              className="px-3.5 py-1 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#2D5A83] text-[12.5px] sm:text-[13.5px] font-semibold flex items-center gap-1.5 backdrop-blur-xs"
+              className="px-3 py-0.5 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#2D5A83] text-[12px] sm:text-[13px] font-semibold flex items-center gap-1.5 backdrop-blur-xs"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#80B9E8] animate-spin" style={{ animationDuration: '6s' }} />
+              <Sparkles className="w-3 h-3 text-[#80B9E8] animate-spin" style={{ animationDuration: '6s' }} />
               <span>You made my day! Call me after lectures! 💙</span>
             </motion.div>
           ) : userChoice === 'angry' ? (
@@ -181,7 +181,7 @@ export const HugInteraction: React.FC = () => {
               initial={{ opacity: 0, y: 4, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.92 }}
-              className="px-3.5 py-1 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#2D5A83] text-[12px] sm:text-[13px] font-semibold flex items-center gap-1 backdrop-blur-xs"
+              className="px-3 py-0.5 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#2D5A83] text-[11.5px] sm:text-[12.5px] font-semibold flex items-center gap-1 backdrop-blur-xs"
             >
               <span>I understand baby 🥺 Please call me when lectures end! 💙</span>
             </motion.div>
@@ -190,7 +190,7 @@ export const HugInteraction: React.FC = () => {
               key="angry-confirm"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-[12px] text-[#477FAF] font-semibold flex items-center gap-1"
+              className="text-[11.5px] text-[#477FAF] font-semibold flex items-center gap-1"
             >
               <span>Are you really sure? 🥺 Teddy is so sad! Tap again if you are...</span>
             </motion.div>
@@ -199,7 +199,7 @@ export const HugInteraction: React.FC = () => {
               key="hug-delivered"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="px-3.5 py-1 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#2D5A83] text-[12.5px] font-semibold flex items-center gap-1"
+              className="px-3 py-0.5 rounded-full bg-white/95 border border-[#B8D8F5] shadow-xs text-[#2D5A83] text-[12px] font-semibold flex items-center gap-1"
             >
               <span>One big warm hug, just for you! 💙</span>
             </motion.div>
@@ -208,7 +208,7 @@ export const HugInteraction: React.FC = () => {
               key="prompt-message"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-[12.5px] sm:text-[13.5px] text-[#4E677E] font-medium font-sans flex items-center gap-1"
+              className="text-[12px] sm:text-[13px] text-[#4E677E] font-medium font-sans flex items-center gap-1"
             >
               <span>Will you forgive me?</span>
               <span className="text-sm">🥺</span>
@@ -218,14 +218,14 @@ export const HugInteraction: React.FC = () => {
       </div>
 
       {/* The Two Choice Buttons (Mobile Friendly Stack / Grid) */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-2 w-full max-w-[360px] px-1">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-1.5 w-full max-w-[350px] px-1">
         {/* Button 1: "I forgive you and I love you 💙" */}
         <motion.button
           type="button"
           onClick={handleForgive}
           whileHover={shouldReduceMotion ? {} : { scale: 1.03 }}
           whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
-          className={`relative overflow-hidden w-full sm:w-auto flex-1 min-h-[44px] px-5 py-2.5 rounded-full font-semibold text-[13px] sm:text-[13.5px] tracking-wide shadow-btn-shadow transition-all duration-300 flex items-center justify-center gap-1.5 touch-manipulation cursor-pointer ${
+          className={`relative overflow-hidden w-full sm:w-auto flex-1 min-h-[42px] px-4 py-2 rounded-full font-semibold text-[12.5px] sm:text-[13px] tracking-wide shadow-btn-shadow transition-all duration-300 flex items-center justify-center gap-1.5 touch-manipulation cursor-pointer ${
             userChoice === 'forgive'
               ? 'bg-[#477FAF] text-white ring-2 ring-white'
               : 'bg-gradient-to-r from-[#80B9E8] via-[#68A7DC] to-[#477FAF] text-white'
@@ -234,7 +234,7 @@ export const HugInteraction: React.FC = () => {
         >
           <span className="absolute -inset-full w-[250%] h-[250%] bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none animate-light-ray" />
           <span className="relative z-10 flex items-center justify-center gap-1">
-            {userChoice === 'forgive' && <Check className="w-4 h-4" />}
+            {userChoice === 'forgive' && <Check className="w-3.5 h-3.5" />}
             <span>I forgive you and I love you</span>
             <span className="text-sm">💙</span>
           </span>
@@ -247,7 +247,7 @@ export const HugInteraction: React.FC = () => {
           whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
           whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
           animate={angryTapCount === 1 ? { x: [-3, 3, -3, 3, 0] } : {}}
-          className={`relative w-full sm:w-auto min-h-[44px] px-4 py-2.5 rounded-full font-semibold text-[12px] sm:text-[12.5px] tracking-wide transition-all duration-300 flex items-center justify-center gap-1 touch-manipulation cursor-pointer border ${
+          className={`relative w-full sm:w-auto min-h-[42px] px-3.5 py-2 rounded-full font-semibold text-[11.5px] sm:text-[12px] tracking-wide transition-all duration-300 flex items-center justify-center gap-1 touch-manipulation cursor-pointer border ${
             userChoice === 'angry'
               ? 'bg-[#D6EBFF] text-[#2D5A83] border-[#80B9E8]'
               : angryTapCount === 1
@@ -262,12 +262,12 @@ export const HugInteraction: React.FC = () => {
       </div>
 
       {/* Hug / Call Action Row beneath response */}
-      <div className="flex items-center justify-center gap-3 mt-2 text-[11.5px] sm:text-[12px]">
+      <div className="flex items-center justify-center gap-3 mt-1 text-[11px] sm:text-[11.5px]">
         {/* Tap for a hug option */}
         <button
           type="button"
           onClick={triggerBurst}
-          className="text-[#477FAF] hover:text-[#2D5A83] font-semibold flex items-center gap-1 py-1 px-2.5 rounded-full hover:bg-white/60 transition-colors cursor-pointer touch-manipulation active:scale-95"
+          className="text-[#477FAF] hover:text-[#2D5A83] font-semibold flex items-center gap-1 py-0.5 px-2 rounded-full hover:bg-white/60 transition-colors cursor-pointer touch-manipulation active:scale-95"
         >
           <span>Tap for a hug</span>
           <span className="text-sm">🧸</span>
@@ -278,7 +278,7 @@ export const HugInteraction: React.FC = () => {
         {CONFIG.phoneNumber && (
           <a
             href={`tel:${CONFIG.phoneNumber}`}
-            className="text-[#477FAF] hover:text-[#2D5A83] font-semibold flex items-center gap-1 py-1 px-2.5 rounded-full hover:bg-white/60 transition-colors cursor-pointer active:scale-95"
+            className="text-[#477FAF] hover:text-[#2D5A83] font-semibold flex items-center gap-1 py-0.5 px-2 rounded-full hover:bg-white/60 transition-colors cursor-pointer active:scale-95"
           >
             <Phone className="w-3 h-3 text-[#80B9E8]" />
             <span>Call him 📞</span>

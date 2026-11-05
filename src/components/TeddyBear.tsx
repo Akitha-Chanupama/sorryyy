@@ -87,7 +87,7 @@ export const TeddyBear: React.FC<TeddyBearProps> = ({ isHugging = false, onBearT
         viewBox="0 0 120 120"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-[98px] h-[98px] sm:w-[110px] sm:h-[110px] filter drop-shadow-[0_10px_20px_rgba(86,145,190,0.28)] transition-transform duration-300"
+        className="w-[88px] h-[88px] sm:w-[98px] sm:h-[98px] filter drop-shadow-[0_10px_20px_rgba(86,145,190,0.28)] transition-transform duration-300"
       >
         <defs>
           {/* Fur Gradient - Cuddly honey mocha */}
